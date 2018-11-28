@@ -1,0 +1,124 @@
+<a class="mouseOverMotion" href="{% url 'sampleapp:mycalendar' week.previous.year week.previous.month  week.previous.day %}">&lt;</a>&emsp;
+{{ week.first | date:"Y年 m月 d日" }}〜{{ week.last | date:"Y年 m月 d日" }}
+&emsp;<a class="mouseOverMotion" href="{% url 'sampleapp:mycalendar' week.next.year week.next.month  week.next.day %}">&gt;</a>
+
+<style type="text/css">
+
+td.hiddenBorder{
+border-style:none solid;
+border-width:1px;
+border-color:#B2B2B2;
+}
+
+td.lineBorder{
+border-style:solid solid none solid;
+border-width:1px;
+border-color:#B2B2B2;
+}
+
+</style>
+
+<table>
+  <tbody>
+    <tr>
+      <td><font size="3px">時刻</font></td>
+      {% for day in week.days %}
+      {% if week.now == day %}
+      <td>
+        {% else %}
+      <td>
+        {% endif %}
+	<font size="5px;">
+          {% if week.first.month != day.month %}
+          {{ day | date:"m/d" }}
+          {% else %}
+          {{ day.day }}
+          {% endif %}
+	</font>
+      </td>
+      {% endfor %}
+    </tr>
+    {% for num in list1 %}
+    <tr>
+      {% if num != forloop.counter %}
+      <td class="lineBorder" style=""><font>{{num}}</font>
+	{% else %}
+      <td class="hiddenBorder" style="">
+
+	{% endif %}
+      </td>
+
+
+      {% for xday in week.days %}
+      {% if num != forloop.parentloop.counter %}
+      <td class="lineBorder" style="height:1px;width:120px;">
+
+
+<!--padding-bottomとmargin-bottomで相殺すれば、下にはみでた状態になる-->
+{% if num == 200 %}
+ <div style='background:#9DCCE0;height:50px;margin-top:-25px;padding-top:0px;padding-bottom:{{num}}px;margin-bottom:-{{num}}px;'>sample text</div>
+{% endif %}
+
+
+
+	{% else %}
+      <td class="hiddenBorder" style="height:1px;width:120px;">
+
+
+
+<!--padding-bottomとmargin-bottomで相殺すれば、下にはみでた状態になる-->
+<!--forでスケジュールリスト分回して、一致した時だけif文内に入り、以下のdiv文を生成するようにする.-->
+{% if num == 100 and forloop.counter == 3 %}
+ <div style='background:#9DCCE0;height:50px;margin-top:-25px;padding-top:0px;padding-bottom:{{100}}px;margin-bottom:-{{100}}px;'>sample text</div>
+{% endif %}
+
+
+<!--padding-bottomとmargin-bottomで相殺すれば、下にはみでた状態になる-->
+{% if num == 2 and forloop.counter == 5 %}
+ <div style='background:#9DCCE0;height:50px;margin-top:-25px;padding-top:0px;padding-bottom:{{500}}px;margin-bottom:-{{500}}px;'>sample text</div>
+{% endif %}
+
+
+	{% endif %}
+      </td>
+      {% endfor %}
+    </tr>
+    {% endfor %}
+
+    <!--
+
+      <tr>
+	   <td>time</td>
+        {% for day in week.days %}
+          {% if week.now == day %}
+            <td class="table-success">
+          {% else %}
+            <td>
+          {% endif %}
+          {% if week.first.month != day.month %}
+            {{ day | date:"m/d" }}
+          {% else %}
+            {{ day.day }}
+          {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+      {% for xxx in time %}
+      <tr>
+	  <td>t</td>
+
+	  {% for xday in week.days %}
+	     <td>
+	     {% for day_schedule_list in week.schedule_list %}
+	        
+	       
+	     {% endfor %}
+	     </td>
+	  {% endfor %}
+      </tr>
+      {% endfor %}
+
+-->
+
+  </tbody>
+</table>

@@ -1,0 +1,54 @@
+<style type="text/css">
+
+.mouseOverMotion:hover
+{
+ background-color: #99cc00;
+ width: 300px;
+    margin: 0 auto;
+    padding: 15px 0;
+    font-size: 20px;
+    text-decoration: none;
+    display: block;
+    text-align: center;
+    color: #FFFFFF;
+    background: #008DDD;
+    border-radius: 5px;
+    -webkit-border-radius: 5px;/* for Safari and Chrome 対応*/
+    -moz-border-radius: 5px;/* for Firefox 対応*/
+}
+
+</style>
+
+<center>
+<a class="mouseOverMotion" href="{% url 'sampleapp:mycalendar' month.previous.year month.previous.month month.previous.day %}">&lt;</a>&emsp;
+{{ month.current | date:"Y年m月" }}
+&emsp;<a class="mouseOverMotion" href="{% url 'sampleapp:mycalendar' month.next.year month.next.month month.next.day %}">&gt;</a>
+</center>
+<table class="table table-bordered" style="table-layout: fixed;">
+  <thead>
+    <tr>
+      {% for w in month.week_names %}
+        <th>{{ w }}</th>
+      {% endfor %}
+    </tr>
+  </thead>
+  <tbody>
+    {% for week in month.days %}
+      <tr>
+        {% for day in week %}
+          {% if month.now == day %}
+            <td class="table-success">
+          {% else %}
+            <td>
+          {% endif %}
+	  {% if month.current.month != day.month %}
+            <a href="{% url 'sampleapp:mycalendar' day.year day.month day.day %}"><font color="707070">{{ day.day }}</font></a>
+	  {% else %}
+	    <a href="{% url 'sampleapp:mycalendar' day.year day.month day.day %}">{{ day.day }}</a>
+	  {% endif %}
+          </td>
+        {% endfor %}
+      </tr>
+    {% endfor %}
+  </tbody>
+</table>
